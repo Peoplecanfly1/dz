@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState} from 'react';
 import Todos from './components/Todos';
 
 function App() {
   const [todo, setTodo] = useState({});
   const inputElement = React.useRef(0);
   console.log('render main')
+
   // ужасный код с current.value и defaultvalue но зато без useState и ререндера на инпуте )
   const getData = React.useCallback(async () => {
       if(inputElement.current.value === inputElement.current.defaultValue){
@@ -13,8 +14,8 @@ function App() {
       const todo =  await getAPi(inputElement.current.value);
       inputElement.current.defaultValue = inputElement.current.value
       setTodo(todo);
-      
   }, [inputElement.current.value]);
+
 
   const getAPi = React.useCallback(async(id) => {
     const responce = await fetch(
@@ -23,6 +24,7 @@ function App() {
     const data = await responce.json();
     return data
   }, [])
+
 
   React.useEffect(async()=>{
     const todo = await getAPi(1);
